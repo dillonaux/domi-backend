@@ -16,12 +16,23 @@ const pool = new Pool({
   port: 5432,
 });
 
-app.post('/address', (req, res) => {
+app.post('/api/address', (req, res) => {
   const { getPaid, name, earn, phone } = req.body;
+  const tableName = 'accounts'
+  const query = `
+  CREATE TABLE IF NOT EXISTS ${tableName} (
+    user_id serial PRIMARY KEY NOT NULL,
+    usr_name VARCHAR(255) NOT NULL,
+    usr_region VARCHAR(255) NOT NULL,
+    usr_earn VARCHAR(255) NOT NULL,
+    phone_num VARCHAR(255) NOT NULL
+  );
+  
+  INSERT INTO ${tableName} (usr_name, usr_region, usr_earn, phone_num) VALUES ('${getPaid}', '${name}', '${earn}', '${phone}')`;
 
   pool.connect();
 
-  pool.query('INSERT INTO accounts (usr_name, usr_region, usr_earn, phone_num) VALUES ($1, $2, $3, $4)', [getPaid, name, earn, phone], (err, result) => {
+  pool.query(query, (err, result) => {
     if (err) {
       console.error(err);
       res.status(500).send('Error inserting data');
