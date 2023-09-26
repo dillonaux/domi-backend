@@ -9,10 +9,10 @@ const PORT = process.env.PORT || 5000;
 
 const { Pool } = require('pg');
 const pool = new Pool({
-  user: 'postgres',
+  user: 'digitaldomi_user',
   host: 'localhost',
-  database: 'domi',
-  password: 'postgres',
+  database: 'digitaldomi_db',
+  password: 'rI7hJ4sF1zC4jA1oN0eT8wT1q',
   port: 5432,
 });
 
